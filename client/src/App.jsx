@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { Route, Routes } from 'react-router-dom'
 
 function App() {
 
   return (
     <>
-      <h1>Welcome to the app</h1>
+      <h1>Welcome</h1>
+      <Routes>
+      </Routes>
     </>
   )
 }
