@@ -1,4 +1,5 @@
 import cors from 'cors'
+import { json } from 'express';
 import { urlencoded } from 'express';
 // import { static: staticHandler } from 'express';
 import cookieParser from 'cookie-parser';
@@ -8,6 +9,7 @@ const secret = 'what a secret';
 
 export default function configExpress(app) {
     app.use(cors());
+    app.use(json())
     app.use(cookieParser(secret));
     // app.use(session());
     app.use(urlencoded({ extended: true }));

@@ -1,4 +1,4 @@
-import { userRouter } from '../service/user.js'
+import { userRouter } from '../api-service/user.js'
 
 export default function configRoutes(app) {
 
