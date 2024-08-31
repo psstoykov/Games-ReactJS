@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { body, validationResult } from 'express-validator'
-// import { login, register } from '../services/user.js'
+import { login, register } from '../services/user.js'
 
 const userRouter = Router();
 
@@ -15,9 +15,22 @@ userRouter.post(
     async (req, res) => {
         const body = req.body;
 
+        const { name, email, password } = body;
 
-        console.log(req.body)
-        res.json(body);
+        try {
+
+            const result = validationResult(req)
+            if (result.errors.length) {
+                res.json(result.errors)
+                throw result.errors
+            }
+            const user = await register(name, email, password);
+            //TODO attach token
+            // const token = createToken(user);
+            res.json(user);
+        } catch (err) {
+            res.json(err.errors)
+        }
     }
 )
 export { userRouter }

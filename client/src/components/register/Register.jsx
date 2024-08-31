@@ -16,17 +16,13 @@ export default function Register() {
     const submitHandler = (e) => {
         e.preventDefault();
 
-        //TODO use values from state
-        const formData = new FormData(e.target);
-
-        const data = Object.fromEntries(formData);
         const register = async () => {
             const request = await fetch("http://localhost:3000/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify(values),
             });
             const response = await request.json();
             console.log(response);
