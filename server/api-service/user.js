@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { body, validationResult } from 'express-validator'
 import { login, register } from '../services/user.js'
+import { createToken } from "../services/token.js";
+
 
 const userRouter = Router();
 
@@ -24,12 +26,38 @@ userRouter.post(
                 res.json(result.errors)
                 throw result.errors
             }
+
             const user = await register(name, email, password);
-            //TODO attach token
-            // const token = createToken(user);
+
+            const token = createToken(user)
+            res.cookie('token', token, { httpOnly: true })
+
             res.json(user);
         } catch (err) {
             res.json(err.errors)
+        }
+    }
+);
+
+
+userRouter.post(
+    '/login',
+    body('email').trim(),
+    body('password').trim(),
+    async (req, res) => {
+        const { email, password } = req.body;
+        try {
+            if (!email || !password) {
+                throw 'All fields are required'
+
+            }
+            const user = await login(email, password);
+            const token = createToken(user)
+            res.cookie('token', token, { httpOnly: true })
+            user.token = token
+            res.json(user)
+        } catch (err) {
+            res.json(err.toString())
         }
     }
 )

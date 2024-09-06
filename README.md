@@ -15,4 +15,15 @@
 -   [x] initialize and configure server
 -   [x] initialize database
 
+## 4. Authentication
+
+-   [ ] create server token
+-   [ ] create session
+-   [ ] attach token to current user session
+
 ## TODO
+
+-   [x] register form functionality
+-   [x] save register to database
+-   [ ] implement login form functionality
+-   [ ] implement create game functionality

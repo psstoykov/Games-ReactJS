@@ -1,4 +1,36 @@
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+
+const initialValues = { email: "", password: "" };
+
 export default function Login() {
+    const [values, setValues] = useState(initialValues);
+
+    const changeHandler = (e) => {
+        setValues((state) => ({
+            ...state,
+            [e.target.name]: e.target.value,
+        }));
+    };
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+
+        const login = async () => {
+            const request = await fetch("http://localhost:3000/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(values),
+            });
+            const response = await request.json();
+            console.log(response);
+        };
+
+        login();
+        setValues(initialValues);
+    };
     return (
         <>
             <section
@@ -22,17 +54,23 @@ export default function Login() {
                         <div className="col-lg-6">
                             <div className="login__form">
                                 <h3>Login</h3>
-                                <form action="#">
+                                <form onSubmit={submitHandler}>
                                     <div className="input__item">
                                         <input
+                                            name="email"
                                             type="text"
+                                            value={values.email}
+                                            onChange={changeHandler}
                                             placeholder="Email address"
                                         />
                                         <span className="icon_mail" />
                                     </div>
                                     <div className="input__item">
                                         <input
-                                            type="text"
+                                            name="password"
+                                            type="password"
+                                            value={values.password}
+                                            onChange={changeHandler}
                                             placeholder="Password"
                                         />
                                         <span className="icon_lock" />
